@@ -13,10 +13,9 @@ vim.opt.incsearch = true
 vim.opt.termguicolors = true
 vim.opt.updatetime = 50
 vim.g.mapleader = " "
-vim.opt.signcolumn = 'yes'
+vim.opt.signcolumn = 'no'
+
 -- https://github.com/ellisonleao/gruvbox.nvim
-
-
 require("gruvbox").setup({
   undercurl = true,
   underline = true,

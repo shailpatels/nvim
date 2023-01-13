@@ -43,5 +43,9 @@ return require('packer').startup(function(use)
 	  }
   }
 
-  use 'ziglang/zig'
+  use 'preservim/nerdtree'
+
+  use 'ap/vim-buftabline'
+  use 'vim-airline/vim-airline'
+  use 'vim-airline/vim-airline-themes'
 end)
