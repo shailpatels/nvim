@@ -7,4 +7,3 @@ vim.cmd [[
     \ let buf=bufnr() | buffer# | execute "normal! \<C-W>w" | execute 'buffer'.buf | endif
     let NERDTreeShowHidden=1
 ]]
-
