@@ -1,4 +1,0 @@
-
-vim.cmd [[
-    AirlineTheme lucius 
-]]
