@@ -11,7 +11,7 @@ return {
 			"williamboman/mason-lspconfig.nvim",
 			config = function()
 				require('mason-lspconfig').setup({
-					ensure_installed = { "pyright", "tsserver", "rust_analyzer" },
+					ensure_installed = { "pyright", "tsserver", "rust_analyzer", "zls" },
 				})
 			end,
 		},
@@ -33,6 +33,28 @@ return {
 
 				lspconfig.pyright.setup({ on_attach = on_attach })
 				lspconfig.tsserver.setup({ on_attach = on_attach })
+				lspconfig.rust_analyzer.setup({ 
+                    on_attach = on_attach,
+                    settings = {
+                        ["rust-analyzer"] = {
+                            imports = {
+                                granularity = {
+                                    group = "module",
+                                },
+                                prefix = "self",
+                            },
+                            cargo = {
+                                buildScripts = {
+                                    enable = true,
+                                },
+                            },
+                            procMacro = {
+                                enable = true
+                            },
+                        }
+                    }
+                })
+
 				lspconfig.zls.setup({ 
                     on_attach = on_attach,
                     settings = {
@@ -60,11 +82,13 @@ return {
 						['<C-Space>'] = cmp.mapping.complete(),
 						['<C-e>'] = cmp.mapping.abort(),
 						['<CR>'] = cmp.mapping.confirm({ select = true }),
+                        ['<C-p>'] = cmp.mapping.select_prev_item(),
+                        ['<C-n>'] = cmp.mapping.select_next_item(),
 					}),
 					sources = cmp.config.sources({
-						{ name = 'nvim_lsp' },
-					}, {
-						{ name = 'buffer' },
+                        {name = 'nvim_lsp' },
+                        {name = 'buffer' },
+                        {name = 'path' },
 					})
 				})
 			end,
