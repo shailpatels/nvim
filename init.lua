@@ -1,1 +1,5 @@
-require("shail")
+
+
+require("config.lazy")
+
+
