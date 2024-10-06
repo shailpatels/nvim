@@ -34,6 +34,7 @@ vim.opt.incsearch = true
 vim.opt.termguicolors = true
 vim.opt.updatetime = 50
 vim.opt.signcolumn = 'no'
+vim.opt.colorcolumn = '100' 
 
 -- Setup lazy.nvim
 require("lazy").setup({
