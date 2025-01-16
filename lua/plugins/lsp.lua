@@ -11,7 +11,7 @@ return {
 			"williamboman/mason-lspconfig.nvim",
 			config = function()
 				require('mason-lspconfig').setup({
-					ensure_installed = { "pyright", "rust_analyzer", "zls" },
+					ensure_installed = { "pyright", "rust_analyzer", "zls", "intelephense" },
 				})
 			end,
 		},
@@ -33,6 +33,8 @@ return {
 
 				lspconfig.pyright.setup({ on_attach = on_attach })
 				lspconfig.tsserver.setup({ on_attach = on_attach })
+				lspconfig.intelephense.setup({ on_attach = on_attach })
+
 				lspconfig.rust_analyzer.setup({ 
                     on_attach = on_attach,
                     settings = {
