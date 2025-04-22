@@ -61,7 +61,17 @@ return {
                     on_attach = on_attach,
                     settings = {
                         zls = {
-                            zig_exe_path = "/home/shail/GitHub/zig/build/stage3/bin/zig",
+                            zig_exe_path = (function()
+                                local handle = io.popen('which zig 2> /dev/null')
+                                if handle then
+                                    local result = handle:read("*a")
+                                    handle:close()
+                                    -- Remove trailing newline
+                                    return result:gsub("[\n\r]", "")
+                                end
+                                -- Fallback to a default path or return nil if which command fails
+                                return nil
+                            end)(),
                         }
                     }
                 })
