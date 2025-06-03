@@ -9,12 +9,15 @@ return {
 
 		{
 			"williamboman/mason-lspconfig.nvim",
-			config = function()
-				require('mason-lspconfig').setup({
-					ensure_installed = { "pyright", "rust_analyzer", "zls", "intelephense" },
-				})
-			end,
-		},
+            dependencies = {
+                { "mason-org/mason.nvim", opts = {} },
+                "neovim/nvim-lspconfig",
+            },
+            opts = {
+                ensure_installed = { "pyright", "rust_analyzer", "zls", "intelephense" },
+                automatic_enable = false,
+            },
+        },
 
 		{
 			"neovim/nvim-lspconfig",
