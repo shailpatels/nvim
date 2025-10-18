@@ -26,6 +26,7 @@ return {
             local on_attach = function(client, bufnr)
                 local bufopts = { noremap = true, silent = true, buffer = bufnr }
                 vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
+                vim.keymap.set('n', '<C-[>', vim.lsp.buf.references, bufopts)
                 vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
                 vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
                 vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
@@ -45,7 +46,21 @@ return {
             lspconfig.clangd.setup({ on_attach = on_attach, capabilities = capabilities })
             lspconfig.lua_ls.setup({ on_attach = on_attach, capabilities = capabilities })
 
-            lspconfig.rust_analyzer.setup({ 
+            lspconfig.gopls.setup({
+                on_attach = on_attach,
+                capabilities = capabilities,
+                settings = {
+                    gopls = {
+                        analyses = {
+                            unusedparams = true,
+                        },
+                        staticcheck = true,
+                        gofumpt = true,
+                    },
+                },
+            })
+
+            lspconfig.rust_analyzer.setup({
                 on_attach = on_attach,
                 capabilities = capabilities,
                 settings = {
@@ -68,7 +83,7 @@ return {
                 }
             })
 
-            lspconfig.zls.setup({ 
+            lspconfig.zls.setup({
                 on_attach = on_attach,
                 capabilities = capabilities,
                 settings = {
@@ -94,8 +109,8 @@ return {
         'hrsh7th/nvim-cmp',
         dependencies = {
             'hrsh7th/cmp-nvim-lsp',
-            'hrsh7th/cmp-buffer',     
-            'hrsh7th/cmp-path',      
+            'hrsh7th/cmp-buffer',
+            'hrsh7th/cmp-path',
             'L3MON4D3/LuaSnip',
         },
         config = function()
