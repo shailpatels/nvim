@@ -32,6 +32,8 @@ return {
                 vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
                 vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, bufopts)
 
+                vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, bufopts)
+
                 vim.keymap.set({'n','v'}, '<space>ca', function()
                     vim.lsp.buf.code_action({}, bufnr)
                 end, bufopts)
