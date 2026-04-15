@@ -12,7 +12,7 @@ return {
             "williamboman/mason.nvim"
         },
         opts = {
-            ensure_installed = { "pyright", "rust_analyzer", "zls", "intelephense", "clangd", "lua_ls" },
+            ensure_installed = { "pyright", "rust_analyzer", "zls", "intelephense", "clangd", "lua_ls", "gopls" },
             automatic_enable = false,
         },
     },
@@ -26,7 +26,7 @@ return {
             local on_attach = function(client, bufnr)
                 local bufopts = { noremap = true, silent = true, buffer = bufnr }
                 vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
-                vim.keymap.set('n', '<C-[>', vim.lsp.buf.references, bufopts)
+                vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
                 vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
                 vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
                 vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
@@ -34,9 +34,7 @@ return {
 
                 vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, bufopts)
 
-                vim.keymap.set({'n','v'}, '<space>ca', function()
-                    vim.lsp.buf.code_action({}, bufnr)
-                end, bufopts)
+                vim.keymap.set({'n','v'}, '<space>ca', vim.lsp.buf.code_action, bufopts)
 
                 vim.keymap.set({'n','v'}, '<space>f', function()
                     vim.lsp.buf.format({ async = true, bufnr = bufnr })
@@ -90,17 +88,7 @@ return {
                 capabilities = capabilities,
                 settings = {
                     zls = {
-                        zig_exe_path = (function()
-                            local handle = io.popen('which zig 2> /dev/null')
-                            if handle then
-                                local result = handle:read("*a")
-                                handle:close()
-                                -- Remove trailing newline
-                                return result:gsub("[\n\r]", "")
-                            end
-                            -- Fallback to a default path or return nil if which command fails
-                            return nil
-                        end)(),
+                        zig_exe_path = vim.fn.exepath('zig') ~= '' and vim.fn.exepath('zig') or nil,
                     }
                 }
             })
